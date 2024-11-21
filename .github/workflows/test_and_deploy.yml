@@ -1,0 +1,39 @@
+name: Build, Test, and Deploy
+
+on:
+  pull_request:
+  workflow_dispatch: # Add this to allow manual or external triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Node Version
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/iron
+
+      - name: Install
+        uses: bahmutov/npm-install@v1
+
+      - name: Build
+        run: |
+          npm run build --if-present
+        env:
+          CI: true
+
+      - name: E2E Prepare
+        run: |
+          npm run e2e:prepare --if-present
+        env:
+          CI: true
+
+      - name: E2E
+        run: |
+          npm run vrt --if-present
+        env:
+          CI: true
