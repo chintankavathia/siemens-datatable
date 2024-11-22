@@ -12,6 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+        # Install Git LFS (in case it's not already installed)
+      - name: Install Git LFS
+        run: |
+          git lfs install
+          git lfs pull  # Fetch the LFS files if not already fetched
+
       - name: Set Node Version
         uses: actions/setup-node@v4
         with:
