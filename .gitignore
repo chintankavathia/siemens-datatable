@@ -10,3 +10,5 @@ coverage/
 yarn.lock
 /.vscode
 *.tgz
+/playwright/results/
+/playwright/.cache/
